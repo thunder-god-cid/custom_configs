@@ -1,0 +1,75 @@
+{
+  "servers" : [ {
+    "port" : "8086",
+    "host" : "localhost",
+    "alias" : "jira",
+    "queries" : [ {
+ 
+      "outputWriters" : [ {
+        "@class" : "com.googlecode.jmxtrans.model.output.GraphiteWriter",
+        "settings" : {
+          "port" : 2003,
+          "host" : "graphite-ha.mindcandy.com"
+        }
+      } ],
+      "obj" : "java.lang:type=OperatingSystem",
+      "resultAlias": "os",      
+      "attr" : [ "SystemLoadAverage", "AvailableProcessors", "TotalPhysicalMemorySize", 
+                "FreePhysicalMemorySize", "TotalSwapSpaceSize", "FreeSwapSpaceSize", 
+                "OpenFileDescriptorCount", "MaxFileDescriptorCount" ]
+    }, {
+ 
+      "outputWriters" : [ {
+        "@class" : "com.googlecode.jmxtrans.model.output.GraphiteWriter",
+        "settings" : {
+          "port" : 2003,
+          "host" : "graphite-ha.mindcandy.com"
+        }
+      } ],
+      "obj" : "com.atlassian.jira:name=BasicDataSource",
+      "resultAlias": "dbConnections",
+      "attr" : [ "NumActive" , "MaxActive" ]
+ 
+    }, {
+ 
+      "outputWriters" : [ {
+        "@class" : "com.googlecode.jmxtrans.model.output.GraphiteWriter",
+        "settings" : {
+          "port" : 2003,
+          "host" : "graphite-ha.mindcandy.com"
+        }
+      } ],
+      "obj" : "java.lang:type=Memory",
+      "resultAlias": "memory",
+      "attr" : [ "HeapMemoryUsage", "NonHeapMemoryUsage" ]
+ 
+    }, {
+ 
+      "outputWriters" : [ {
+        "@class" : "com.googlecode.jmxtrans.model.output.GraphiteWriter",
+        "settings" : {
+          "port" : 2003,
+          "host" : "graphite-ha.mindcandy.com"
+        }
+      } ],
+      "obj" : "java.lang:type=GarbageCollector,name=*",
+      "resultAlias": "gc",
+      "attr" : [ "CollectionCount", "CollectionTime" ]
+ 
+    }, {
+ 
+      "outputWriters" : [ {
+        "@class" : "com.googlecode.jmxtrans.model.output.GraphiteWriter",
+        "settings" : {
+          "port" : 2003,
+          "host" : "graphite-ha.mindcandy.com"
+        }
+      } ],
+      "obj" : "java.lang:type=MemoryPool,name=*",
+      "resultAlias": "memorypool",
+      "attr" : [ "Usage" ]
+ 
+    } ],
+    "numQueryThreads" : 2
+  } ]
+}
